@@ -34,6 +34,9 @@ Commands:
   clients list               List all client firms
   clients add                Add a new client firm
   clients show <id>          Show client details
+  leads list [days]          List leads from ads/content
+  leads add <name>           Log a new lead (--source, --campaign, --email)
+  leads funnel               Show lead funnel summary
   setup                      Run OAuth authorization
   help                       Show this message
 
@@ -88,6 +91,22 @@ Examples:
           scSiteUrl: sIdx >= 0 ? args[sIdx+1] : null, contacts: coIdx >= 0 ? [{name: args[coIdx+1], email: eIdx >= 0 ? args[eIdx+1] : null}] : [] });
       }
       else { console.log('Usage: clients list|show|add'); }
+      break;
+    case 'leads':
+    case 'lead':
+      const leads = require('./modules/leads');
+      if (sub === 'list') { leads.listLeads(null, parseInt(args[2]) || 30); }
+      else if (sub === 'funnel') { leads.funnelSummary(); }
+      else if (sub === 'add') {
+        if (!args[2]) { console.log('Usage: leads add <name> [--source ad|organic|direct|referral] [--campaign <name>] [--email <email>]'); process.exit(1); }
+        const sIdx = args.indexOf('--source'); const cIdx = args.indexOf('--campaign');
+        const eIdx = args.indexOf('--email'); const pIdx = args.indexOf('--phone');
+        const lIdx = args.indexOf('--page');
+        leads.addLead({ name: args[2], source: sIdx >= 0 ? args[sIdx+1] : null,
+          campaign: cIdx >= 0 ? args[cIdx+1] : null, email: eIdx >= 0 ? args[eIdx+1] : null,
+          phone: pIdx >= 0 ? args[pIdx+1] : null, landingPage: lIdx >= 0 ? args[lIdx+1] : null });
+      }
+      else { console.log('Usage: leads list|funnel|add'); }
       break;
     default:
       console.error(`❌ Unknown command: ${command}`);

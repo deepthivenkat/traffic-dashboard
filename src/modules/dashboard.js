@@ -284,18 +284,12 @@ h.metrics.forEach(function(m){ht+='<tr><td>'+m.label+'</td><td>'+m.recent+'</td>
 
 // Make default tab active
 switchTab('traffic',document.querySelector('.tab-btn'));
-</script>
 
+// Leads data
+var LEADS = [];
 `;
 
-  const outPath = path.resolve(__dirname, '..', '..', 'dashboard.html');
-
-  // Also load history for the insights tab
-  const hist = history.loadHistory();
-  const comparison = history.generateComparison(hist);
-  const enriched = { ...data, history: { days: Object.keys(hist).length, comparison } };
-
-  const html = `<!DOCTYPE html><html lang="en"><head>
+const html = `<!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>LeadSurgeGen — Client Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -346,6 +340,7 @@ h4{font-size:13px;color:#444;margin:12px 0 6px}
   <button class="tab-btn" onclick="switchTab('ads',this)">📢 Ads</button>
   <button class="tab-btn" onclick="switchTab('content',this)">📄 Content</button>
   <button class="tab-btn" onclick="switchTab('insights',this)">💡 Insights</button>
+  <button class="tab-btn" onclick="switchTab('leads',this)">👤 Leads</button>
 </div>
 
 <div id="tabtraffic" class="tabp">
@@ -382,6 +377,13 @@ h4{font-size:13px;color:#444;margin:12px 0 6px}
     <div class="chart-card"><h3>📋 Recommendations</h3><p id="recBody" style="font-size:14px;line-height:1.6"></p></div>
   </div>
   <div class="chart-card"><h3>📜 Past Queries</h3><table id="queryLogTable"><thead><tr><th>Date</th><th>Question</th></tr></thead><tbody></tbody></table></div>
+</div>
+
+<div id="tableads" class="tabp">
+  <div class="two" id="leadFunnel">
+    <div class="chart-card"><h3>📊 Lead Funnel</h3><div id="funnelSummary" style="font-size:15px;line-height:1.8"></div></div>
+    <div class="chart-card"><h3>👤 Recent Leads</h3><table id="leadTable"><thead><tr><th>Date</th><th>Name</th><th>Source</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+  </div>
 </div>
 
 </div>
