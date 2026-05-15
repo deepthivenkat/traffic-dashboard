@@ -1,0 +1,5 @@
+config/credentials.env
+config/stored_token.json
+node_modules/
+*.token.json
+*.env
