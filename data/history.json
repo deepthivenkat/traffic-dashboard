@@ -1,22 +1,26 @@
 {
   "2026-05-15": {
-    "visitors": 18,
-    "sessions": 20,
-    "formClicks": 1,
+    "visitors": 105,
+    "sessions": 121,
+    "formClicks": 3,
     "formEvent": "form_start",
-    "scClicks": 0,
-    "scImpressions": 0,
+    "scClicks": 3,
+    "scImpressions": 43,
     "sources": {
-      "Unassigned": 10,
-      "Direct": 9,
-      "Organic Search": 3,
-      "Cross-network": 2,
-      "Paid Search": 2
+      "Direct": 53,
+      "Paid Search": 19,
+      "Organic Search": 17,
+      "Cross-network": 7,
+      "Referral": 4,
+      "Unassigned": 4,
+      "Display": 3,
+      "Organic Social": 1
     },
     "campaigns": {
-      "Search-4": 2,
-      "P.Max | Lead Gen | 2025": 1
+      "Search-4": 15,
+      "Search | DSA | 2025": 9,
+      "P.Max | Lead Gen | 2025": 8
     },
-    "updatedAt": "2026-05-15T18:16:26.924Z"
+    "updatedAt": "2026-05-15T21:01:57.259Z"
   }
 }

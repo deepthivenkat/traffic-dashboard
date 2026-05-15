@@ -17,23 +17,26 @@
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
+  const tabIdx = args.indexOf('--tab');
+  const tabFilter = tabIdx >= 0 ? args[tabIdx + 1] : null;
 
   if (!command || command === 'help') {
     console.log(`
 📊 Traffic Dashboard
 
 Commands:
-  dashboard [days]    CLI traffic report (default: 7)
-  html [days]         Generate interactive HTML dashboard (default: 14)
-  bookings [days]     Appointments & conversion report (default: 7)
-  query <question>    Ask about performance trends
-  setup               Run OAuth authorization
-  help                Show this message
+  dashboard [days]           CLI traffic report (default: 7)
+  dashboard [days] --tab <t> Show just one tab: traffic|ads|content|insights
+  html [days]                Generate interactive HTML dashboard
+  bookings [days]            Appointments & conversion report (default: 7)
+  query <question>           Ask about performance trends
+  setup                      Run OAuth authorization
+  help                       Show this message
 
 Examples:
   node src/dashboard.js dashboard 7
+  node src/dashboard.js dashboard --tab ads
   node src/dashboard.js html 14
-  node src/dashboard.js bookings
   node src/dashboard.js query "why has performance declined"
 `);
     return;
@@ -49,7 +52,7 @@ Examples:
   switch (command) {
     case 'dashboard':
     case 'traffic':
-      await dash.dashboard(parseInt(args[1]) || 7);
+      await dash.dashboard(parseInt(args[1]) || 7, tabFilter);
       break;
     case 'html':
       await dash.generateHTML(parseInt(args[1]) || 14);
