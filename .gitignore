@@ -2,6 +2,7 @@ node_modules/
 config/
 data/*
 !data/history.json
+!data/clients.json
 dashboard.html
 *.token.json
 *.env

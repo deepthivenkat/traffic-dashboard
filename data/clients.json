@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "name": "Fred A. Joshua, P.C.",
+    "domain": "joshualegal.com",
+    "ga4PropertyId": "519369580",
+    "scSiteUrl": "sc-domain:joshualegal.com",
+    "googleAdsCustomerId": "289-344-4353",
+    "contacts": [
+      {
+        "name": "Fred A. Joshua",
+        "email": null,
+        "phone": null,
+        "role": "Attorney"
+      }
+    ],
+    "notes": "Family/divorce law. Manager account: LegalGrowthEngine (754-792-5693).",
+    "createdAt": "2026-05-15T23:11:53.030Z",
+    "updatedAt": "2026-05-15T23:11:53.031Z"
+  }
+]
