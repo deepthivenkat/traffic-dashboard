@@ -1,26 +1,27 @@
 {
   "2026-05-15": {
-    "visitors": 105,
-    "sessions": 121,
-    "formClicks": 3,
-    "formEvent": "form_start",
-    "scClicks": 3,
-    "scImpressions": 43,
+    "visitors": 230,
+    "sessions": 259,
+    "formClicks": 1,
+    "formEvent": "form_submit",
+    "scClicks": 8,
+    "scImpressions": 78,
     "sources": {
-      "Direct": 53,
-      "Paid Search": 19,
-      "Organic Search": 17,
-      "Cross-network": 7,
-      "Referral": 4,
-      "Unassigned": 4,
-      "Display": 3,
-      "Organic Social": 1
+      "Direct": 120,
+      "Paid Search": 44,
+      "Organic Search": 37,
+      "Cross-network": 10,
+      "Referral": 7,
+      "Unassigned": 7,
+      "Display": 4,
+      "Organic Social": 2
     },
     "campaigns": {
-      "Search-4": 15,
-      "Search | DSA | 2025": 9,
-      "P.Max | Lead Gen | 2025": 8
+      "Search-4": 34,
+      "Search | DSA | 2025": 17,
+      "P.Max | Lead Gen | 2025": 12,
+      "(organic)": 1
     },
-    "updatedAt": "2026-05-15T21:01:57.259Z"
+    "updatedAt": "2026-05-15T23:10:33.564Z"
   }
 }

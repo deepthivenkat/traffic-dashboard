@@ -46,7 +46,7 @@ function generateInsight(data) {
         body: 'Already ranking #' + best.position + ' with ' + best.ctr + ' CTR. ' +
           'Create a dedicated landing page and sitelink for this query to capture more traffic. ' +
           (pages_.length > 0 ? 'Top page: ' + pages_[0].page.replace('https://joshualegal.com','').replace('https://www.joshualegal.com','') || '/' : '') + '.',
-        action: 'node src/ads-client.js sitelinks build top5',
+        action: 'node src/dashboard.js sitelinks build top5',
       };
     }
   }
@@ -116,7 +116,7 @@ async function dashboard(days = 7, tabFilter = null) {
 
   function showSection(name) { return !tabFilter || tabFilter === name; }
 
-  console.log(`\n📊 Traffic Dashboard — Last ${days} Days`); console.log(divider('═'));
+  console.log(`\n⚡ LeadSurgeGen — joshualegal.com (Last ${days} Days)`); console.log(divider('═'));
 
   // Actionable insight at the top
   const insight = generateInsight({ visitors, sources, pages, contactForm, countries, campaigns, adSources, searchPerf });
@@ -297,7 +297,7 @@ switchTab('traffic',document.querySelector('.tab-btn'));
 
   const html = `<!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>📊 joshualegal.com — Control Center</title>
+<title>LeadSurgeGen — Client Dashboard</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -334,8 +334,8 @@ td{padding:6px 10px;border-bottom:1px solid #f0f0f0}
 h4{font-size:13px;color:#444;margin:12px 0 6px}
 </style></head><body>
 <div class="container">
-<h1>📊 joshualegal.com</h1>
-<p class="sub">Last ${days} days · ${new Date().toLocaleDateString()}</p>
+<h1>⚡ LeadSurgeGen</h1>
+<p class="sub">📊 joshualegal.com · Fred A. Joshua, P.C. · Last ${days} days · ${new Date().toLocaleDateString()}</p>
 
 <div class="chart-card insight-banner" id="insight"><h3 id="insightTitle"></h3><p id="insightBody"></p><p class="action" id="insightAction"></p></div>
 
