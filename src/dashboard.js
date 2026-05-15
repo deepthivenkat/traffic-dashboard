@@ -26,6 +26,7 @@ Commands:
   dashboard [days]    CLI traffic report (default: 7)
   html [days]         Generate interactive HTML dashboard (default: 14)
   bookings [days]     Appointments & conversion report (default: 7)
+  query <question>    Ask about performance trends
   setup               Run OAuth authorization
   help                Show this message
 
@@ -33,6 +34,7 @@ Examples:
   node src/dashboard.js dashboard 7
   node src/dashboard.js html 14
   node src/dashboard.js bookings
+  node src/dashboard.js query "why has performance declined"
 `);
     return;
   }
@@ -55,6 +57,13 @@ Examples:
     case 'bookings':
     case 'appointments':
       await dash.appointmentsReport(parseInt(args[1]) || 7);
+      break;
+    case 'query':
+    case 'ask':
+    case 'why':
+      const question = args.slice(1).join(' ') || 'how are things looking';
+      const query = require('./modules/query');
+      await query.answer(question);
       break;
     default:
       console.error(`❌ Unknown command: ${command}`);
