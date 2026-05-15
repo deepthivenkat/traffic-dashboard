@@ -409,10 +409,9 @@ h4{font-size:13px;color:#444;margin:12px 0 6px}
   const hist = history.loadHistory();
   const comparison = history.generateComparison(hist);
   const enriched = { ...data, history: { days: Object.keys(hist).length, comparison } };
+  const outPath = path.resolve(__dirname, '..', '..', 'dashboard.html');
   const bodyWithRecs = html + script + JSON.stringify(enriched) + script2;
-  // Inject recommendations
   const finalHtml = bodyWithRecs.replace('id="recBody" style="font-size:14px;line-height:1.6"></p>', 'id="recBody" style="font-size:14px;line-height:1.6">' + recs.replace(/\n/g, '<br>') + '</p>');
-
   fs.writeFileSync(outPath, finalHtml);
   console.log(`\n✅ Dashboard: ${outPath}\n   open ${outPath}\n`);
 }
