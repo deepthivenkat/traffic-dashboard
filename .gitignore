@@ -3,3 +3,7 @@ config/stored_token.json
 node_modules/
 *.token.json
 *.env
+
+# History data (keep the file, ignore anything else in data/)
+data/*
+!data/history.json

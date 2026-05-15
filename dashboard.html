@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>📊 Traffic Dashboard — joshualegal.com</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,system-ui,sans-serif;background:#f0f2f5;color:#1a1a2e;padding:20px}
+.container{max-width:1200px;margin:0 auto}
+h1{font-size:28px;margin-bottom:5px}
+.sub{color:#666;margin-bottom:20px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:24px}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.card h3{font-size:13px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.card .val{font-size:36px;font-weight:700}
+.card .sub{font-size:13px;color:#888;margin-top:4px}
+.chart-card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.1);margin-bottom:16px}
+.chart-card h3{font-size:16px;margin-bottom:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;padding:8px 12px;border-bottom:2px solid #eee;color:#666;font-size:12px;text-transform:uppercase}
+td{padding:8px 12px;border-bottom:1px solid #f0f0f0}
+h4{font-size:14px;color:#444;margin:16px 0 8px}
+@media(max-width:768px){.two{grid-template-columns:1fr}}
+</style></head><body>
+<div class="container">
+<h1>📊 joshualegal.com — Traffic Dashboard</h1>
+<p class="sub">Last 14 days · 5/15/2026</p>
+
+<div class="chart-card" id="insight" style="border-left:4px solid #4f46e5;margin-bottom:16px"><h3 id="insightTitle"></h3><p id="insightBody" style="font-size:15px;line-height:1.5"></p><p id="insightAction" style="font-size:13px;color:#666;margin-top:8px;font-family:monospace"></p></div>
+
+<div class="grid" id="stats"></div>
+
+<div class="two">
+  <div class="chart-card"><h3>📈 Daily Visitors</h3><canvas id="visitorChart" height="200"></canvas></div>
+  <div class="chart-card"><h3>🔗 Traffic Sources</h3><canvas id="sourceChart" height="200"></canvas></div>
+</div>
+
+<div class="two">
+  <div class="chart-card">
+    <h3>🔍 Search Console</h3>
+    <h4>Top Queries</h4>
+    <table id="searchQueryTable"><thead><tr><th>Query</th><th>Clicks</th><th>Impr</th><th>CTR</th><th>Pos</th></tr></thead><tbody></tbody></table>
+    <h4>Top Pages</h4>
+    <table id="searchPageTable"><thead><tr><th>Page</th><th>Clicks</th><th>Impr</th><th>CTR</th></tr></thead><tbody></tbody></table>
+  </div>
+</div>
+
+<div class="two">
+  <div class="chart-card"><h3>📅 Conversion Rate</h3>
+    <table id="convTable"><thead><tr><th>Day</th><th>Visits</th><th>Form</th></tr></thead><tbody></tbody></table>
+  </div>
+  <div class="chart-card"><h3>📢 Campaign Attribution</h3><canvas id="campChart" height="200"></canvas></div>
+</div>
+
+<div class="two">
+  <div class="chart-card"><h3>📄 Top Pages (GA4)</h3><table id="pagesTable"><thead><tr><th>Views</th><th>Page</th></tr></thead><tbody></tbody></table></div>
+</div>
+</div>
+
+<script>
+function parseDate(ymd){if(!ymd||ymd.length!==8)return new Date();return new Date(parseInt(ymd.slice(0,4)),parseInt(ymd.slice(4,6))-1,parseInt(ymd.slice(6,8)))}
+var D = {"visitors":[{"date":"20260501","users":16,"sessions":18},{"date":"20260502","users":13,"sessions":13},{"date":"20260503","users":11,"sessions":11},{"date":"20260504","users":19,"sessions":22},{"date":"20260505","users":27,"sessions":28},{"date":"20260506","users":23,"sessions":25},{"date":"20260507","users":16,"sessions":21},{"date":"20260508","users":13,"sessions":17},{"date":"20260509","users":11,"sessions":13},{"date":"20260510","users":14,"sessions":15},{"date":"20260511","users":15,"sessions":16},{"date":"20260512","users":13,"sessions":19},{"date":"20260513","users":17,"sessions":17},{"date":"20260514","users":11,"sessions":13},{"date":"20260515","users":7,"sessions":7}],"sources":[{"source":"Direct","users":117,"pct":"50.2"},{"source":"Paid Search","users":42,"pct":"18.0"},{"source":"Organic Search","users":36,"pct":"15.5"},{"source":"Unassigned","users":14,"pct":"6.0"},{"source":"Cross-network","users":11,"pct":"4.7"},{"source":"Referral","users":7,"pct":"3.0"},{"source":"Display","users":4,"pct":"1.7"},{"source":"Organic Social","users":2,"pct":"0.9"}],"pages":[{"path":"/","title":"Fred A. Joshua, P.C.","views":253},{"path":"/contact","title":"Contact Us - Fred A. Joshua, P.C.","views":21},{"path":"/blog/prenuptial-postnuptial-agreements-protecting-love-clarity-and-your-long-term-future","title":"Fred A. Joshua, P.C.","views":2},{"path":"/blog/safeguarding-assets-and-peace-prior-to-divorce","title":"Fred A. Joshua, P.C.","views":2},{"path":"/index.html","title":"Fred A. Joshua, P.C.","views":2},{"path":"/blog/child-custody-child-support-and-parenting-time-protecting-your-bond-your-stability-and-your-childs-future","title":"Fred A. Joshua, P.C.","views":1},{"path":"/blog/how-to-win-custody-battle-against-wealthy-spouse","title":"Fred A. Joshua, P.C.","views":1},{"path":"/disclaimer","title":"Disclaimer","views":1}],"contactForm":{"eventName":"form_submit","daily":[{"date":"20260504","count":1}],"total":1},"countries":[{"country":"United States","users":135,"pct":"60.5"},{"country":"Singapore","users":56,"pct":"25.1"},{"country":"China","users":8,"pct":"3.6"},{"country":"India","users":6,"pct":"2.7"},{"country":"Canada","users":3,"pct":"1.3"},{"country":"Philippines","users":2,"pct":"0.9"},{"country":"Australia","users":1,"pct":"0.4"},{"country":"Costa Rica","users":1,"pct":"0.4"},{"country":"Egypt","users":1,"pct":"0.4"},{"country":"Hong Kong","users":1,"pct":"0.4"},{"country":"Iraq","users":1,"pct":"0.4"},{"country":"Mexico","users":1,"pct":"0.4"},{"country":"Morocco","users":1,"pct":"0.4"},{"country":"Pakistan","users":1,"pct":"0.4"},{"country":"Switzerland","users":1,"pct":"0.4"},{"country":"Thailand","users":1,"pct":"0.4"},{"country":"United Kingdom","users":1,"pct":"0.4"},{"country":"Uzbekistan","users":1,"pct":"0.4"},{"country":"Venezuela","users":1,"pct":"0.4"}],"campaigns":[{"campaign":"(direct)","users":117,"sessions":120,"pct":"45.6"},{"campaign":"(organic)","users":37,"sessions":53,"pct":"20.2"},{"campaign":"Search-4","users":31,"sessions":33,"pct":"12.5"},{"campaign":"Search | DSA | 2025","users":14,"sessions":16,"pct":"6.1"},{"campaign":"P.Max | Lead Gen | 2025","users":9,"sessions":12,"pct":"4.6"},{"campaign":"(referral)","users":9,"sessions":11,"pct":"4.2"},{"campaign":"(cross-network)","users":2,"sessions":2,"pct":"0.8"}],"byCountry":[],"adSources":{"totalSessions":62,"totalUsers":55,"campaigns":[{"source":"google","medium":"cpc","campaign":"Search-4","sessions":33,"users":31},{"source":"google","medium":"cpc","campaign":"Search | DSA | 2025","sessions":16,"users":14},{"source":"google","medium":"cpc","campaign":"P.Max | Lead Gen | 2025","sessions":12,"users":9},{"source":"google","medium":"cpc","campaign":"(organic)","sessions":1,"users":1}]},"searchPerf":{"queries":[{"query":"fred joshua","clicks":4,"impressions":51,"ctr":"7.8%","position":"1.4"},{"query":"child custody lawyers near me","clicks":1,"impressions":4,"ctr":"25.0%","position":"1.0"},{"query":"divorce law firm near me","clicks":1,"impressions":8,"ctr":"12.5%","position":"22.4"},{"query":"fred a joshua pc","clicks":1,"impressions":1,"ctr":"100.0%","position":"1.0"},{"query":"fredrick joshua","clicks":1,"impressions":5,"ctr":"20.0%","position":"1.0"},{"query":"a bright lawyer","clicks":0,"impressions":1,"ctr":"0%","position":"34.0"},{"query":"abogado de child support","clicks":0,"impressions":3,"ctr":"0%","position":"1.0"},{"query":"abogado de divorcio cerca de mi","clicks":0,"impressions":1,"ctr":"0%","position":"28.0"},{"query":"abogado de familia","clicks":0,"impressions":3,"ctr":"0%","position":"3.3"},{"query":"abogado de familia four oaks","clicks":0,"impressions":1,"ctr":"0%","position":"33.0"}],"pages":[{"page":"http://www.joshualegal.com/","clicks":12,"impressions":5899,"ctr":"0.2%","position":"2.5"},{"page":"https://joshualegal.com/","clicks":10,"impressions":2990,"ctr":"0.3%","position":"41.1"},{"page":"https://joshualegal.com/contact","clicks":1,"impressions":82,"ctr":"1.2%","position":"7.8"},{"page":"https://www.joshualegal.com/child-custody-hinsdale","clicks":1,"impressions":572,"ctr":"0.2%","position":"23.0"},{"page":"https://www.joshualegal.com/orders-of-protection-darien","clicks":1,"impressions":1,"ctr":"100.0%","position":"11.0"},{"page":"https://www.joshualegal.com/orders-of-protection-oak-lawn","clicks":1,"impressions":49,"ctr":"2.0%","position":"10.0"},{"page":"https://joshualegal.com/#w-tabs-0-data-w-pane-0","clicks":0,"impressions":78,"ctr":"0%","position":"5.0"},{"page":"https://joshualegal.com/#w-tabs-0-data-w-pane-1","clicks":0,"impressions":78,"ctr":"0%","position":"5.0"},{"page":"https://joshualegal.com/#w-tabs-0-data-w-pane-2","clicks":0,"impressions":78,"ctr":"0%","position":"5.0"},{"page":"https://joshualegal.com/#w-tabs-0-data-w-pane-3","clicks":0,"impressions":78,"ctr":"0%","position":"5.0"}]},"days":14};
+var tv = D.visitors.reduce(function(s,d){return s+d.users},0);
+var ts = D.visitors.reduce(function(s,d){return s+d.sessions},0);
+var convRate = D.contactForm.total&&tv?((D.contactForm.total/tv)*100).toFixed(1)+'%':'—';
+var campTotal = (D.campaigns||[]).reduce(function(s,c){return s+c.sessions},0);
+// Generate insight on the client side
+function genInsight(D){var q=D.searchPerf.queries||[];for(var i=0;i<q.length;i++){var p=parseFloat(q[i].position);var ctr=parseFloat(q[i].ctr);if(p<=3&&ctr>5&&q[i].clicks>0){return{icon:'🚀',title:'Keyword Opportunity: "'+q[i].query+'"',body:'Ranking #'+q[i].position+' with '+q[i].ctr+' CTR. Create a dedicated landing page and sitelink.',action:'node src/ads-client.js sitelinks build top5'}}}var t=0;for(var i=0;i<D.visitors.length;i++)t+=D.visitors[i].users;if(D.contactForm.eventName&&t>50){var r=((D.contactForm.total||0)/t*100);if(r<5){var cv=(D.pages||[]).find(function(p){return p.path==='/contact'});return{icon:'📝',title:'Conversion Rate at '+r.toFixed(1)+'%',body:'Only '+D.contactForm.total+' form clicks from '+t+' visitors.'+(cv?' Contact page has '+cv.views+' views.':'')+' Add CTA to homepage.',action:'Add "Free Consultation" button to header'}}}return{icon:'📊',title:'All Systems Normal',body:'Review data below for opportunities.',action:'Run: insights'}}
+var I=genInsight(D);document.getElementById('insightTitle').innerHTML=I.icon+' '+I.title;document.getElementById('insightBody').innerHTML=I.body;document.getElementById('insightAction').innerHTML='▶ '+I.action;
+
+document.getElementById('stats').innerHTML = [
+  {l:'Visitors',v:tv.toLocaleString(),s:'Unique visitors ('+D.days+'d)'},
+  {l:'Sessions',v:ts.toLocaleString(),s:'Total sessions'},
+  {l:'Form Clicks',v:(D.contactForm.total||0).toLocaleString(),s:'Conv rate: '+convRate},
+  {l:'Campaign Sessions',v:campTotal.toLocaleString(),s:'Tracked by Google Ads'},
+].map(function(c){return '<div class=card><h3>'+c.l+'</h3><div class=val>'+c.v+'</div><div class=sub>'+c.s+'</div></div>'}).join('');
+
+new Chart(document.getElementById('visitorChart'),{type:'bar',data:{labels:D.visitors.map(function(d){var dt=parseDate(d.date);return dt.toLocaleDateString('en',{weekday:'short',month:'short',day:'numeric'})}),datasets:[
+{label:'Visitors',data:D.visitors.map(function(d){return d.users}),backgroundColor:'#4f46e5',borderRadius:4},
+{label:'Sessions',data:D.visitors.map(function(d){return d.sessions}),backgroundColor:'#10b981',borderRadius:4}]},
+options:{responsive:true,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true,grid:{color:'#f0f0f0'}},x:{grid:{display:false}}}}});
+
+var SL={'Direct':'Direct','Paid Search':'Google Ads','Organic Search':'Organic Search','Display':'Display','Cross-network':'Cross-network','Referral':'Referral','Organic Social':'Social (Organic)','Unassigned':'Unassigned'};
+new Chart(document.getElementById('sourceChart'),{type:'doughnut',data:{labels:D.sources.map(function(s){return SL[s.source]||s.source}),datasets:[{data:D.sources.map(function(s){return s.users}),backgroundColor:['#4f46e5','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899']}]},options:{responsive:true,plugins:{legend:{position:'right'}}}});
+
+if(D.campaigns&&D.campaigns.length){new Chart(document.getElementById('campChart'),{type:'bar',data:{labels:D.campaigns.map(function(c){return c.campaign}),datasets:[{label:'Sessions',data:D.campaigns.map(function(c){return c.sessions}),backgroundColor:'#8b5cf6',borderRadius:4}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'#f0f0f0'}},y:{grid:{display:false}}}}})}
+
+function addRows(tid,rows,cols){rows.forEach(function(r){var tr=document.createElement('tr');tr.innerHTML=cols.map(function(c){return '<td>'+r[c]+'</td>'}).join('');document.getElementById(tid).appendChild(tr)})}
+addRows('searchQueryTable',D.searchPerf.queries||[],['query','clicks','impressions','ctr','position']);
+addRows('searchPageTable',(D.searchPerf.pages||[]).map(function(p){return{page:(p.page.replace('https://joshualegal.com','').replace('https://www.joshualegal.com','')||'/'),clicks:p.clicks,impressions:p.impressions,ctr:p.ctr}}),['page','clicks','impressions','ctr']);
+addRows('pagesTable',(D.pages||[]).map(function(p){return{views:p.views,page:p.path}}),['views','page']);
+var convRows = [];
+for(var i=0;i<D.visitors.length;i++){var v=D.visitors[i];var fc=0;for(var j=0;j<D.contactForm.daily.length;j++){if(D.contactForm.daily[j].date===v.date){fc=D.contactForm.daily[j].count;break}}convRows.push({day:parseDate(v.date).toLocaleDateString('en',{weekday:'short',month:'short',day:'numeric'}),visits:v.users,form:fc})}
+addRows('convTable',convRows,['day','visits','form']);
+</script></body></html>

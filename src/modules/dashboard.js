@@ -16,6 +16,7 @@
 const path = require('path');
 const fs = require('fs');
 const analytics = require('./analytics');
+const history = require('./history');
 
 // ── Display helpers ───────────────────────────────────────────────────
 
@@ -122,6 +123,13 @@ async function dashboard(days = 7) {
   console.log(`  ▶ ${insight.action}`);
   console.log(divider('─'));
 
+  // History: save today's snapshot + show comparison
+  const histData = { visitors, sources, contactForm, adSources, searchPerf };
+  const hist = history.saveDailySnapshot(histData);
+  const comparison = history.generateComparison(hist);
+  history.printComparison(comparison);
+  console.log(divider('─'));
+
   console.log(`\n  📈 Visitors: ${fmt(total)}  Sessions: ${fmt(sessions)}`);
   console.log(divider());
 
@@ -203,6 +211,7 @@ async function dashboard(days = 7) {
 async function generateHTML(days = 14) {
   const auth = analytics.getAuth();
   const data = await analytics.fetchAll(days, auth);
+  history.saveDailySnapshot(data);
 
   const html = `<!DOCTYPE html><html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -311,6 +320,7 @@ addRows('convTable',convRows,['day','visits','form']);
 async function appointmentsReport(days = 7) {
   const auth = analytics.getAuth();
   const data = await analytics.fetchAll(days, auth);
+  history.saveDailySnapshot(data);
   const total = data.visitors.reduce((s, d) => s + d.users, 0);
 
   console.log(`\n📅 Appointments Report — Last ${days} Days`);
