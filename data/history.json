@@ -1,0 +1,22 @@
+{
+  "2026-05-15": {
+    "visitors": 18,
+    "sessions": 20,
+    "formClicks": 1,
+    "formEvent": "form_start",
+    "scClicks": 0,
+    "scImpressions": 0,
+    "sources": {
+      "Unassigned": 10,
+      "Direct": 9,
+      "Organic Search": 3,
+      "Cross-network": 2,
+      "Paid Search": 2
+    },
+    "campaigns": {
+      "Search-4": 2,
+      "P.Max | Lead Gen | 2025": 1
+    },
+    "updatedAt": "2026-05-15T18:14:57.930Z"
+  }
+}

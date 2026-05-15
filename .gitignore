@@ -1,9 +1,7 @@
-config/credentials.env
-config/stored_token.json
 node_modules/
-*.token.json
-*.env
-
-# History data (keep the file, ignore anything else in data/)
+config/
 data/*
 !data/history.json
+dashboard.html
+*.token.json
+*.env
